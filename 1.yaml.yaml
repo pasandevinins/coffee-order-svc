@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Combined API Specification
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      summary: Health Check
+      responses:
+        '200':
+          description: OK
+  /users/{userId}/orders:
+    get:
+      summary: Get User Orders
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    orderId:
+                      type: string
+                    items:
+                      type: array
+                      items:
+                        type: string
+    post:
+      summary: Create Orders
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - items
+      responses:
+        '201':
+          description: Order created
+    delete:
+      summary: Delete Orders
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Orders deleted
+  /users/{userId}/orders/{orderId}:
+    delete:
+      summary: Delete Order By ID
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Order deleted
+components:
+  schemas: {}
